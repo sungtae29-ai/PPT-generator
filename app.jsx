@@ -131,7 +131,7 @@ function Thumb({ product, idx, imageUrl, onTap }) {
       {imageUrl
         ? <img src={imageUrl} alt="" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
         : <div style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center',opacity:0.35}}><ProductIcon id={product} color={C.dimmer} size={28}/></div>}
-      <div style={{position:'absolute',left:5,bottom:4,fontFamily:FONT_MONO,fontSize:7,color:C.dimmer,background:'rgba(255,255,255,0.8)',borderRadius:4,padding:'1px 4px'}}>#{idx}</div>
+      <div style={{position:'absolute',left:5,bottom:4,fontFamily:FONT_MONO,fontSize:10,color:C.dimmer,background:'rgba(255,255,255,0.8)',borderRadius:4,padding:'1px 4px'}}>#{idx}</div>
     </button>
   );
 }
@@ -161,11 +161,11 @@ function ProductCard({ product, segments, status, count, onTap, disabled }) {
             <ProductIcon id={product.id} color={isShooting||isDone?'#fff':C.dim} size={20}/>
           </div>
           <div style={{minWidth:0,flex:1}}>
-            <div style={{fontSize:12,fontWeight:700,letterSpacing:0.3,color:C.text}}>{product.name}</div>
-            <div style={{fontSize:11,color:C.dim,marginTop:1}}>{product.kor}</div>
+            <div style={{fontSize:14,fontWeight:700,letterSpacing:0.3,color:C.text}}>{product.name}</div>
+            <div style={{fontSize:13,color:C.dim,marginTop:1}}>{product.kor}</div>
           </div>
         </div>
-        <div style={{fontFamily:FONT_MONO,fontSize:10,color:isShooting?C.accent:isDone?C.leaf:C.dimmer,
+        <div style={{fontFamily:FONT_MONO,fontSize:12,color:isShooting?C.accent:isDone?C.leaf:C.dimmer,
           background:isShooting?C.accentSoft:isDone?C.leafSoft:C.surfaceHi,
           border:`1px solid ${isShooting?C.accentBright:isDone?C.leaf+'60':C.border}`,
           padding:'2px 7px',borderRadius:999,flexShrink:0,fontWeight:600}}>
@@ -184,14 +184,14 @@ function ProductCard({ product, segments, status, count, onTap, disabled }) {
             background:isDone?C.leaf:isShooting?C.accent:C.faint,
             boxShadow:isShooting?`0 0 8px ${C.accent}`:'none',
             animation:isShooting?'pulse 1.2s ease-in-out infinite':'none'}}/>
-          <div style={{fontSize:11,color:isDone?C.leaf:isShooting?C.accent:C.dim,fontWeight:600}}>
+          <div style={{fontSize:13,color:isDone?C.leaf:isShooting?C.accent:C.dim,fontWeight:600}}>
             {isDone?'완료':isShooting?'촬영중':'대기'}
           </div>
         </div>
         <div style={{display:'flex',alignItems:'baseline',gap:2}}>
-          <span style={{fontFamily:FONT_MONO,fontSize:18,fontWeight:700,
+          <span style={{fontFamily:FONT_MONO,fontSize:20,fontWeight:700,
             color:isDone?C.leaf:isShooting?C.accent:C.text}}>{count}</span>
-          <span style={{fontFamily:FONT_MONO,fontSize:11,color:C.dimmer}}>/{total}</span>
+          <span style={{fontFamily:FONT_MONO,fontSize:13,color:C.dimmer}}>/{total}</span>
         </div>
       </div>
     </button>
@@ -303,11 +303,11 @@ function CameraScreen({ product, segments, shotIndex, totalShots, paused,
     <div style={{position:'absolute',inset:0,zIndex:100,background:C.bg,
       display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:24,gap:16}}>
       <div style={{fontSize:40}}>📷</div>
-      <div style={{fontSize:16,fontWeight:700,color:C.text}}>카메라 접근 필요</div>
-      <div style={{fontSize:13,color:C.dim,textAlign:'center',lineHeight:1.6}}>브라우저에서 카메라 권한을 허용해 주세요.</div>
-      <div style={{fontFamily:FONT_MONO,fontSize:11,color:C.danger,padding:'8px 12px',background:`${C.danger}15`,borderRadius:8}}>{camError}</div>
+      <div style={{fontSize:18,fontWeight:700,color:C.text}}>카메라 접근 필요</div>
+      <div style={{fontSize:15,color:C.dim,textAlign:'center',lineHeight:1.6}}>브라우저에서 카메라 권한을 허용해 주세요.</div>
+      <div style={{fontFamily:FONT_MONO,fontSize:13,color:C.danger,padding:'8px 12px',background:`${C.danger}15`,borderRadius:8}}>{camError}</div>
       <button onClick={onStop} style={{height:48,padding:'0 24px',borderRadius:12,
-        background:C.surface,border:`1px solid ${C.border}`,color:C.text,fontSize:14,fontWeight:600,cursor:'pointer'}}>돌아가기</button>
+        background:C.surface,border:`1px solid ${C.border}`,color:C.text,fontSize:16,fontWeight:600,cursor:'pointer'}}>돌아가기</button>
     </div>
   );
 
@@ -359,15 +359,15 @@ function CameraScreen({ product, segments, shotIndex, totalShots, paused,
             <div style={{background:'rgba(0,0,0,0.6)',backdropFilter:'blur(8px)',
               border:`1px solid ${C.border}`,borderRadius:20,padding:'6px 16px',
               display:'flex',alignItems:'center',gap:10}}>
-              <div style={{fontFamily:FONT_MONO,fontSize:10,color:C.dim}}>{Math.round(shotIndex*360/totalShots)}°</div>
+              <div style={{fontFamily:FONT_MONO,fontSize:12,color:C.dim}}>{Math.round(shotIndex*360/totalShots)}°</div>
               <div style={{width:1,height:12,background:C.border}}/>
-              <div style={{fontFamily:FONT_MONO,fontSize:10,color:C.accent}}>
+              <div style={{fontFamily:FONT_MONO,fontSize:12,color:C.accent}}>
                 {product.name}{isCage && ` · ${faceSide}`}
               </div>
               <div style={{width:1,height:12,background:C.border}}/>
-              <div style={{fontFamily:FONT_MONO,fontSize:10,color:C.dim}}>{shotIndex+1}/{totalShots}</div>
+              <div style={{fontFamily:FONT_MONO,fontSize:12,color:C.dim}}>{shotIndex+1}/{totalShots}</div>
               <div style={{width:1,height:12,background:C.border}}/>
-              <div style={{fontFamily:FONT_MONO,fontSize:10,color:C.amber}}>{zoomLevel.toFixed(1)}×</div>
+              <div style={{fontFamily:FONT_MONO,fontSize:12,color:C.amber}}>{zoomLevel.toFixed(1)}×</div>
             </div>
           </div>
 
@@ -376,7 +376,7 @@ function CameraScreen({ product, segments, shotIndex, totalShots, paused,
             <div style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center'}}>
               <div style={{background:'rgba(0,0,0,0.7)',borderRadius:12,padding:'16px 24px',display:'flex',alignItems:'center',gap:10}}>
                 <div style={{width:16,height:16,border:`2px solid ${C.accent}`,borderTopColor:'transparent',borderRadius:'50%',animation:'spin 0.8s linear infinite'}}/>
-                <span style={{fontSize:13,color:C.text}}>카메라 준비 중...</span>
+                <span style={{fontSize:15,color:C.text}}>카메라 준비 중...</span>
               </div>
             </div>
           )}
@@ -395,7 +395,7 @@ function CameraScreen({ product, segments, shotIndex, totalShots, paused,
         <button onClick={onStop} style={{position:'absolute',top:14,right:14,
           background:'rgba(0,0,0,0.6)',backdropFilter:'blur(8px)',
           border:`1px solid ${C.danger}`,color:C.danger,
-          padding:'6px 14px',borderRadius:18,fontSize:12,fontWeight:600,
+          padding:'6px 14px',borderRadius:18,fontSize:14,fontWeight:600,
           fontFamily:FONT_SANS,cursor:'pointer'}}>중단</button>
       </div>
 
@@ -410,21 +410,21 @@ function CameraScreen({ product, segments, shotIndex, totalShots, paused,
               background:active?C.accent:'rgba(255,255,255,0.12)',
               color:active?C.bg:'rgba(255,255,255,0.8)',
               border:'none',borderRadius:10,padding:'5px 9px',
-              fontSize:10,fontFamily:FONT_MONO,cursor:'pointer',fontWeight:active?700:400,
+              fontSize:12,fontFamily:FONT_MONO,cursor:'pointer',fontWeight:active?700:400,
             }}>{z}×</button>
           );
         })}
         <div style={{width:1,height:18,background:'rgba(255,255,255,0.15)',margin:'0 2px'}}/>
         <button onClick={()=>setZoomLevel(prev=>clampZoom(prev-0.1))} style={{
           width:28,height:28,borderRadius:14,background:'rgba(255,255,255,0.12)',
-          border:'none',color:'#fff',fontSize:16,cursor:'pointer',
+          border:'none',color:'#fff',fontSize:18,cursor:'pointer',
           display:'flex',alignItems:'center',justifyContent:'center',lineHeight:1}}>−</button>
-        <span style={{fontFamily:FONT_MONO,fontSize:12,color:'#fff',minWidth:36,textAlign:'center'}}>
+        <span style={{fontFamily:FONT_MONO,fontSize:14,color:'#fff',minWidth:36,textAlign:'center'}}>
           {zoomLevel.toFixed(1)}×
         </span>
         <button onClick={()=>setZoomLevel(prev=>clampZoom(prev+0.1))} style={{
           width:28,height:28,borderRadius:14,background:'rgba(255,255,255,0.12)',
-          border:'none',color:'#fff',fontSize:16,cursor:'pointer',
+          border:'none',color:'#fff',fontSize:18,cursor:'pointer',
           display:'flex',alignItems:'center',justifyContent:'center',lineHeight:1}}>+</button>
       </div>
 
@@ -434,8 +434,8 @@ function CameraScreen({ product, segments, shotIndex, totalShots, paused,
         display:'flex',alignItems:'center',justifyContent:'space-between',gap:16}}>
         <div style={{flex:1}}>
           <div style={{display:'flex',justifyContent:'space-between',marginBottom:6}}>
-            <span style={{fontFamily:FONT_MONO,fontSize:10,color:C.dim}}>진행</span>
-            <span style={{fontFamily:FONT_MONO,fontSize:10,color:C.accent}}>{shotIndex}/{totalShots}</span>
+            <span style={{fontFamily:FONT_MONO,fontSize:12,color:C.dim}}>진행</span>
+            <span style={{fontFamily:FONT_MONO,fontSize:12,color:C.accent}}>{shotIndex}/{totalShots}</span>
           </div>
           <div style={{height:3,background:C.surface,borderRadius:2}}>
             <div style={{height:'100%',width:`${(shotIndex/totalShots)*100}%`,
@@ -456,8 +456,8 @@ function CameraScreen({ product, segments, shotIndex, totalShots, paused,
           </svg>
         </button>
         <div style={{flex:1,textAlign:'right'}}>
-          <div style={{fontFamily:FONT_MONO,fontSize:10,color:C.dim,marginBottom:4}}>다음 각도</div>
-          <div style={{fontFamily:FONT_MONO,fontSize:14,color:C.text,fontWeight:600}}>
+          <div style={{fontFamily:FONT_MONO,fontSize:12,color:C.dim,marginBottom:4}}>다음 각도</div>
+          <div style={{fontFamily:FONT_MONO,fontSize:16,color:C.text,fontWeight:600}}>
             {Math.round((shotIndex+1)*360/totalShots)}°
           </div>
         </div>
@@ -477,21 +477,21 @@ function CameraScreen({ product, segments, shotIndex, totalShots, paused,
               <path d="M45 18 L45 11 M45 18 L38 18" stroke={C.accent} strokeWidth="2" strokeLinecap="round"/>
             </svg>
           </div>
-          <div style={{fontSize:10,color:C.accent,fontFamily:FONT_MONO,letterSpacing:1.5,marginBottom:8,textAlign:'center'}}>
+          <div style={{fontSize:12,color:C.accent,fontFamily:FONT_MONO,letterSpacing:1.5,marginBottom:8,textAlign:'center'}}>
             FLIP REQUIRED · 앞면 {segments}장 완료
           </div>
-          <div style={{fontSize:22,fontWeight:700,color:C.text,letterSpacing:-0.3,marginBottom:10,textAlign:'center'}}>
+          <div style={{fontSize:26,fontWeight:700,color:C.text,letterSpacing:-0.3,marginBottom:10,textAlign:'center'}}>
             제품을 뒤집어주세요
           </div>
-          <div style={{fontSize:12,color:C.dim,lineHeight:1.55,textAlign:'center',marginBottom:28}}>
+          <div style={{fontSize:14,color:C.dim,lineHeight:1.55,textAlign:'center',marginBottom:28}}>
             CAGE를 분리해 뒤집은 후 다시 올려주세요
           </div>
           <div style={{display:'flex',gap:8,width:'100%'}}>
             <button onClick={onStop} style={{flex:1,height:48,borderRadius:12,
               background:'none',border:`1px solid ${C.border}`,color:C.text,
-              fontSize:13,fontWeight:500,fontFamily:FONT_SANS,cursor:'pointer'}}>중단</button>
+              fontSize:15,fontWeight:500,fontFamily:FONT_SANS,cursor:'pointer'}}>중단</button>
             <button onClick={onResume} style={{flex:2,height:48,borderRadius:12,
-              background:C.accent,color:C.bg,fontSize:13,fontWeight:700,
+              background:C.accent,color:C.bg,fontSize:15,fontWeight:700,
               fontFamily:FONT_SANS,cursor:'pointer',border:'none',
               display:'flex',alignItems:'center',justifyContent:'center',gap:6}}>
               뒤집었어요
@@ -527,13 +527,13 @@ function LoginScreen({ onLogin }) {
         </svg>
       </div>
       {/* 타이틀 */}
-      <div style={{fontSize:11,color:C.accent,fontFamily:FONT_MONO,letterSpacing:2.5,marginBottom:10,fontWeight:600}}>JOINT REPORT</div>
-      <div style={{fontSize:30,fontWeight:800,color:C.text,fontFamily:FONT_DISPLAY,letterSpacing:-0.5,marginBottom:10,textAlign:'center',lineHeight:1.2}}>360° Inspection</div>
-      <div style={{fontSize:16,color:C.dim,textAlign:'center',lineHeight:1.65,marginBottom:48,maxWidth:280}}>Google 계정으로 로그인하면<br/>촬영 후 Drive에 자동 업로드됩니다</div>
+      <div style={{fontSize:13,color:C.accent,fontFamily:FONT_MONO,letterSpacing:2.5,marginBottom:10,fontWeight:600}}>JOINT REPORT</div>
+      <div style={{fontSize:34,fontWeight:800,color:C.text,fontFamily:FONT_DISPLAY,letterSpacing:-0.5,marginBottom:10,textAlign:'center',lineHeight:1.2}}>360° Inspection</div>
+      <div style={{fontSize:18,color:C.dim,textAlign:'center',lineHeight:1.65,marginBottom:48,maxWidth:280}}>Google 계정으로 로그인하면<br/>촬영 후 Drive에 자동 업로드됩니다</div>
       {error && (
-        <div style={{width:'100%',maxWidth:320,padding:'12px 16px',borderRadius:12,marginBottom:16,background:C.dangerSoft,border:`1px solid ${C.danger}`,fontSize:14,color:C.danger,textAlign:'center'}}>{error}</div>
+        <div style={{width:'100%',maxWidth:320,padding:'12px 16px',borderRadius:12,marginBottom:16,background:C.dangerSoft,border:`1px solid ${C.danger}`,fontSize:16,color:C.danger,textAlign:'center'}}>{error}</div>
       )}
-      <button onClick={handleGoogleLogin} style={{width:'100%',maxWidth:320,height:56,borderRadius:16,background:'#fff',border:`1.5px solid ${C.border}`,color:C.text,fontSize:16,fontWeight:700,fontFamily:FONT_SANS,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:12,boxShadow:'0 4px 12px rgba(15,23,42,0.08)'}}>
+      <button onClick={handleGoogleLogin} style={{width:'100%',maxWidth:320,height:56,borderRadius:16,background:'#fff',border:`1.5px solid ${C.border}`,color:C.text,fontSize:18,fontWeight:700,fontFamily:FONT_SANS,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:12,boxShadow:'0 4px 12px rgba(15,23,42,0.08)'}}>
         <svg width="22" height="22" viewBox="0 0 48 48">
           <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
           <path fill="#FF3D00" d="m6.306 14.691 6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/>
@@ -645,8 +645,8 @@ function UploadModal({ capturedData, selectedSides, segments, accessToken, onClo
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M7 18a4.5 4.5 0 01-.5-8.97A6 6 0 0118 9.5a4.5 4.5 0 01-.5 8.5H7z" stroke={C.accent} strokeWidth="1.7" fill="none"/><path d="M12 11v6M9.5 13.5L12 11l2.5 2.5" stroke={C.accent} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </div>
             <div>
-              <div style={{fontSize:17,fontWeight:700,color:C.text}}>Google Drive 업로드</div>
-              <div style={{fontSize:12,color:C.dim,marginTop:2}}>사진 + PPT 파일을 Drive에 저장합니다</div>
+              <div style={{fontSize:19,fontWeight:700,color:C.text}}>Google Drive 업로드</div>
+              <div style={{fontSize:14,color:C.dim,marginTop:2}}>사진 + PPT 파일을 Drive에 저장합니다</div>
             </div>
           </div>
 
@@ -654,29 +654,29 @@ function UploadModal({ capturedData, selectedSides, segments, accessToken, onClo
           <div style={{background:C.bg,borderRadius:12,padding:'14px 16px',marginBottom:10}}>
             {SIDES.filter(s=>selectedSides[s]).map(side=>(
               <div key={side} style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:8}}>
-                <span style={{fontSize:13,color:C.text,fontWeight:600}}>{SIDE_LABEL[side]}</span>
-                <span style={{fontFamily:FONT_MONO,fontSize:13,color:C.accent}}>{countBySide[side]}장</span>
+                <span style={{fontSize:15,color:C.text,fontWeight:600}}>{SIDE_LABEL[side]}</span>
+                <span style={{fontFamily:FONT_MONO,fontSize:15,color:C.accent}}>{countBySide[side]}장</span>
               </div>
             ))}
             <div style={{height:1,background:C.border,margin:'4px 0 8px'}}/>
             <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-              <span style={{fontSize:13,color:C.dim}}>총</span>
-              <span style={{fontFamily:FONT_MONO,fontSize:16,fontWeight:700,color:C.accent}}>{totalCount}장</span>
+              <span style={{fontSize:15,color:C.dim}}>총</span>
+              <span style={{fontFamily:FONT_MONO,fontSize:18,fontWeight:700,color:C.accent}}>{totalCount}장</span>
             </div>
           </div>
 
           {/* 저장 위치 */}
           <div style={{background:C.bg,borderRadius:10,padding:'10px 14px',marginBottom:20,display:'flex',alignItems:'flex-start',gap:8}}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style={{marginTop:2,flexShrink:0}}><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" stroke={C.dim} strokeWidth="1.5"/></svg>
-            <div style={{fontSize:11,color:C.dim,fontFamily:FONT_MONO,lineHeight:1.6}}>
+            <div style={{fontSize:13,color:C.dim,fontFamily:FONT_MONO,lineHeight:1.6}}>
               내 드라이브 &gt; HANSAE &gt;<br/>
               <span style={{color:C.text}}>{sessionInfo.folderName}</span>
             </div>
           </div>
 
           <div style={{display:'flex',gap:8}}>
-            <button onClick={onClose} style={{flex:1,height:48,borderRadius:12,background:'none',border:`1px solid ${C.border}`,color:C.text,fontSize:14,fontWeight:500,fontFamily:FONT_SANS,cursor:'pointer'}}>취소</button>
-            <button onClick={startUpload} style={{flex:2,height:48,borderRadius:12,background:C.accent,color:C.bg,fontSize:14,fontWeight:700,fontFamily:FONT_SANS,border:'none',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:8}}>
+            <button onClick={onClose} style={{flex:1,height:48,borderRadius:12,background:'none',border:`1px solid ${C.border}`,color:C.text,fontSize:16,fontWeight:500,fontFamily:FONT_SANS,cursor:'pointer'}}>취소</button>
+            <button onClick={startUpload} style={{flex:2,height:48,borderRadius:12,background:C.accent,color:C.bg,fontSize:16,fontWeight:700,fontFamily:FONT_SANS,border:'none',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:8}}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 18a4.5 4.5 0 01-.5-8.97A6 6 0 0118 9.5a4.5 4.5 0 01-.5 8.5H7z" stroke="currentColor" strokeWidth="1.7" fill="none"/><path d="M12 11v6M9.5 13.5L12 11l2.5 2.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
               업로드 시작
             </button>
@@ -689,8 +689,8 @@ function UploadModal({ capturedData, selectedSides, segments, accessToken, onClo
             <div style={{width:64,height:64,borderRadius:32,margin:'0 auto 20px',background:`${C.accent}15`,border:`1px solid ${C.accent}40`,display:'flex',alignItems:'center',justifyContent:'center'}}>
               <div style={{width:28,height:28,border:`3px solid ${C.accent}`,borderTopColor:'transparent',borderRadius:'50%',animation:'spin 0.8s linear infinite'}}/>
             </div>
-            <div style={{fontSize:16,fontWeight:700,color:C.text,marginBottom:6}}>사진 업로드 중...</div>
-            <div style={{fontSize:13,color:C.dim,marginBottom:20}}>{progress.product} · {progress.current}/{progress.total}장</div>
+            <div style={{fontSize:18,fontWeight:700,color:C.text,marginBottom:6}}>사진 업로드 중...</div>
+            <div style={{fontSize:15,color:C.dim,marginBottom:20}}>{progress.product} · {progress.current}/{progress.total}장</div>
             <div style={{height:4,background:C.bg,borderRadius:2,overflow:'hidden'}}>
               <div style={{height:'100%',background:C.accent,borderRadius:2,width:`${progress.total>0?(progress.current/progress.total)*100:0}%`,transition:'width 0.3s ease'}}/>
             </div>
@@ -703,8 +703,8 @@ function UploadModal({ capturedData, selectedSides, segments, accessToken, onClo
             <div style={{width:64,height:64,borderRadius:32,margin:'0 auto 20px',background:`${C.blue}25`,border:`1px solid ${C.blue}60`,display:'flex',alignItems:'center',justifyContent:'center'}}>
               <div style={{width:28,height:28,border:`3px solid #5B9BD5`,borderTopColor:'transparent',borderRadius:'50%',animation:'spin 0.8s linear infinite'}}/>
             </div>
-            <div style={{fontSize:16,fontWeight:700,color:C.text,marginBottom:6}}>PPT 생성 중...</div>
-            <div style={{fontSize:13,color:C.dim}}>Drive에 PPT 파일을 저장하고 있습니다</div>
+            <div style={{fontSize:18,fontWeight:700,color:C.text,marginBottom:6}}>PPT 생성 중...</div>
+            <div style={{fontSize:15,color:C.dim}}>Drive에 PPT 파일을 저장하고 있습니다</div>
           </div>
         )}
 
@@ -714,18 +714,18 @@ function UploadModal({ capturedData, selectedSides, segments, accessToken, onClo
             <div style={{width:64,height:64,borderRadius:32,margin:'0 auto 20px',background:`${C.accent}15`,border:`1px solid ${C.accent}`,display:'flex',alignItems:'center',justifyContent:'center'}}>
               <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 14l6 6L22 8" stroke={C.accent} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </div>
-            <div style={{fontSize:18,fontWeight:700,color:C.text,marginBottom:6}}>업로드 완료!</div>
-            <div style={{fontSize:13,color:C.dim,marginBottom:6}}>사진 {totalCount}장 + PPT가 Drive에 저장되었습니다</div>
-            <div style={{fontSize:10,color:C.dimmer,fontFamily:FONT_MONO,marginBottom:24,lineHeight:1.5}}>
+            <div style={{fontSize:20,fontWeight:700,color:C.text,marginBottom:6}}>업로드 완료!</div>
+            <div style={{fontSize:15,color:C.dim,marginBottom:6}}>사진 {totalCount}장 + PPT가 Drive에 저장되었습니다</div>
+            <div style={{fontSize:12,color:C.dimmer,fontFamily:FONT_MONO,marginBottom:24,lineHeight:1.5}}>
               내 드라이브 &gt; HANSAE &gt; {sessionInfo.folderName}
             </div>
             <div style={{display:'flex',flexDirection:'column',gap:8}}>
               <a href={driveLink} target="_blank" rel="noopener noreferrer"
-                style={{display:'flex',alignItems:'center',justifyContent:'center',gap:8,height:48,borderRadius:12,background:C.accent,color:C.bg,textDecoration:'none',fontSize:14,fontWeight:700}}>
+                style={{display:'flex',alignItems:'center',justifyContent:'center',gap:8,height:48,borderRadius:12,background:C.accent,color:C.bg,textDecoration:'none',fontSize:16,fontWeight:700}}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 Drive에서 열기
               </a>
-              <button onClick={onDone} style={{height:44,borderRadius:12,background:'none',border:`1px solid ${C.border}`,color:C.text,fontSize:14,fontWeight:500,fontFamily:FONT_SANS,cursor:'pointer'}}>확인</button>
+              <button onClick={onDone} style={{height:44,borderRadius:12,background:'none',border:`1px solid ${C.border}`,color:C.text,fontSize:16,fontWeight:500,fontFamily:FONT_SANS,cursor:'pointer'}}>확인</button>
             </div>
           </div>
         )}
@@ -734,8 +734,8 @@ function UploadModal({ capturedData, selectedSides, segments, accessToken, onClo
         {phase==='error' && (
           <div style={{textAlign:'center',padding:'8px 0'}}>
             <div style={{fontSize:40,marginBottom:16}}>⚠️</div>
-            <div style={{fontSize:16,fontWeight:700,color:C.danger,marginBottom:8}}>업로드 실패</div>
-            <div style={{fontSize:12,color:C.dim,marginBottom:20,lineHeight:1.6}}>{errorMsg}</div>
+            <div style={{fontSize:18,fontWeight:700,color:C.danger,marginBottom:8}}>업로드 실패</div>
+            <div style={{fontSize:14,color:C.dim,marginBottom:20,lineHeight:1.6}}>{errorMsg}</div>
             <div style={{display:'flex',gap:8}}>
               <button onClick={onClose} style={{flex:1,height:44,borderRadius:10,background:'none',border:`1px solid ${C.border}`,color:C.text,cursor:'pointer'}}>닫기</button>
               <button onClick={startUpload} style={{flex:1,height:44,borderRadius:10,background:C.accent,color:C.bg,border:'none',cursor:'pointer',fontWeight:700}}>재시도</button>
@@ -836,8 +836,8 @@ function VisualUploadModal({ visualData, accessToken, onClose, onDone }) {
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke={C.blue} strokeWidth="1.7"/><circle cx="9" cy="11" r="1.5" fill={C.blue}/><path d="M3 17l5-4 4 3 4-3 5 4" stroke={C.blue} strokeWidth="1.6" fill="none"/></svg>
             </div>
             <div>
-              <div style={{fontSize:17,fontWeight:700,color:C.text}}>Visual Inspection 업로드</div>
-              <div style={{fontSize:12,color:C.dim,marginTop:2}}>사진 + PPT 파일을 Drive에 저장합니다</div>
+              <div style={{fontSize:19,fontWeight:700,color:C.text}}>Visual Inspection 업로드</div>
+              <div style={{fontSize:14,color:C.dim,marginTop:2}}>사진 + PPT 파일을 Drive에 저장합니다</div>
             </div>
           </div>
           <div style={{background:C.bg,borderRadius:12,padding:'14px 16px',marginBottom:10}}>
@@ -846,28 +846,28 @@ function VisualUploadModal({ visualData, accessToken, onClose, onDone }) {
               if (cnt===0) return null;
               return (
                 <div key={side} style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:8}}>
-                  <span style={{fontSize:13,color:C.text,fontWeight:600}}>{SIDE_LABEL[side]}</span>
-                  <span style={{fontFamily:FONT_MONO,fontSize:13,color:C.blue}}>{cnt} / {VISUAL_ITEMS.length}장</span>
+                  <span style={{fontSize:15,color:C.text,fontWeight:600}}>{SIDE_LABEL[side]}</span>
+                  <span style={{fontFamily:FONT_MONO,fontSize:15,color:C.blue}}>{cnt} / {VISUAL_ITEMS.length}장</span>
                 </div>
               );
             })}
             <div style={{height:1,background:C.border,margin:'4px 0 8px'}}/>
             <div style={{display:'flex',justifyContent:'space-between'}}>
-              <span style={{fontSize:13,color:C.dim}}>총</span>
-              <span style={{fontFamily:FONT_MONO,fontSize:16,fontWeight:700,color:C.blue}}>{totalShots}장</span>
+              <span style={{fontSize:15,color:C.dim}}>총</span>
+              <span style={{fontFamily:FONT_MONO,fontSize:18,fontWeight:700,color:C.blue}}>{totalShots}장</span>
             </div>
           </div>
           <div style={{background:C.bg,borderRadius:10,padding:'10px 14px',marginBottom:20,display:'flex',alignItems:'flex-start',gap:8}}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style={{marginTop:2,flexShrink:0}}><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" stroke={C.dim} strokeWidth="1.5"/></svg>
-            <div style={{fontSize:11,color:C.dim,fontFamily:FONT_MONO,lineHeight:1.6}}>
+            <div style={{fontSize:13,color:C.dim,fontFamily:FONT_MONO,lineHeight:1.6}}>
               내 드라이브 &gt; HANSAE &gt;<br/>
               <span style={{color:C.text}}>{sessionInfo.folderName}</span><br/>
               <span style={{color:C.dimmer}}>&gt; Visual_Inspection/</span>
             </div>
           </div>
           <div style={{display:'flex',gap:8}}>
-            <button onClick={onClose} style={{flex:1,height:48,borderRadius:12,background:'none',border:`1px solid ${C.border}`,color:C.text,fontSize:14,fontWeight:500,fontFamily:FONT_SANS,cursor:'pointer'}}>취소</button>
-            <button onClick={startUpload} style={{flex:2,height:48,borderRadius:12,background:C.blue,color:'#fff',fontSize:14,fontWeight:700,fontFamily:FONT_SANS,border:'none',cursor:'pointer'}}>
+            <button onClick={onClose} style={{flex:1,height:48,borderRadius:12,background:'none',border:`1px solid ${C.border}`,color:C.text,fontSize:16,fontWeight:500,fontFamily:FONT_SANS,cursor:'pointer'}}>취소</button>
+            <button onClick={startUpload} style={{flex:2,height:48,borderRadius:12,background:C.blue,color:'#fff',fontSize:16,fontWeight:700,fontFamily:FONT_SANS,border:'none',cursor:'pointer'}}>
               업로드 시작
             </button>
           </div>
@@ -878,8 +878,8 @@ function VisualUploadModal({ visualData, accessToken, onClose, onDone }) {
             <div style={{width:64,height:64,borderRadius:32,margin:'0 auto 20px',background:`${C.blue}25`,border:`1px solid ${C.blue}60`,display:'flex',alignItems:'center',justifyContent:'center'}}>
               <div style={{width:28,height:28,border:`3px solid ${C.blue}`,borderTopColor:'transparent',borderRadius:'50%',animation:'spin 0.8s linear infinite'}}/>
             </div>
-            <div style={{fontSize:16,fontWeight:700,color:C.text,marginBottom:6}}>사진 업로드 중...</div>
-            <div style={{fontSize:13,color:C.dim,marginBottom:20}}>{progress.name} · {progress.current}/{progress.total}장</div>
+            <div style={{fontSize:18,fontWeight:700,color:C.text,marginBottom:6}}>사진 업로드 중...</div>
+            <div style={{fontSize:15,color:C.dim,marginBottom:20}}>{progress.name} · {progress.current}/{progress.total}장</div>
             <div style={{height:4,background:C.bg,borderRadius:2,overflow:'hidden'}}>
               <div style={{height:'100%',background:C.blue,borderRadius:2,width:`${progress.total>0?(progress.current/progress.total)*100:0}%`,transition:'width 0.3s ease'}}/>
             </div>
@@ -891,8 +891,8 @@ function VisualUploadModal({ visualData, accessToken, onClose, onDone }) {
             <div style={{width:64,height:64,borderRadius:32,margin:'0 auto 20px',background:`${C.blue}25`,border:`1px solid ${C.blue}60`,display:'flex',alignItems:'center',justifyContent:'center'}}>
               <div style={{width:28,height:28,border:`3px solid #5B9BD5`,borderTopColor:'transparent',borderRadius:'50%',animation:'spin 0.8s linear infinite'}}/>
             </div>
-            <div style={{fontSize:16,fontWeight:700,color:C.text,marginBottom:6}}>Visual PPT 생성 중...</div>
-            <div style={{fontSize:13,color:C.dim}}>Drive에 PPT 파일을 저장하고 있습니다</div>
+            <div style={{fontSize:18,fontWeight:700,color:C.text,marginBottom:6}}>Visual PPT 생성 중...</div>
+            <div style={{fontSize:15,color:C.dim}}>Drive에 PPT 파일을 저장하고 있습니다</div>
           </div>
         )}
 
@@ -901,18 +901,18 @@ function VisualUploadModal({ visualData, accessToken, onClose, onDone }) {
             <div style={{width:64,height:64,borderRadius:32,margin:'0 auto 20px',background:`${C.blue}25`,border:`1px solid ${C.blue}`,display:'flex',alignItems:'center',justifyContent:'center'}}>
               <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 14l6 6L22 8" stroke={C.blue} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </div>
-            <div style={{fontSize:18,fontWeight:700,color:C.text,marginBottom:6}}>업로드 완료!</div>
-            <div style={{fontSize:13,color:C.dim,marginBottom:6}}>사진 {totalShots}장 + Visual PPT가 Drive에 저장됐습니다</div>
-            <div style={{fontSize:10,color:C.dimmer,fontFamily:FONT_MONO,marginBottom:24,lineHeight:1.5}}>
+            <div style={{fontSize:20,fontWeight:700,color:C.text,marginBottom:6}}>업로드 완료!</div>
+            <div style={{fontSize:15,color:C.dim,marginBottom:6}}>사진 {totalShots}장 + Visual PPT가 Drive에 저장됐습니다</div>
+            <div style={{fontSize:12,color:C.dimmer,fontFamily:FONT_MONO,marginBottom:24,lineHeight:1.5}}>
               HANSAE &gt; {sessionInfo.folderName}
             </div>
             <div style={{display:'flex',flexDirection:'column',gap:8}}>
               <a href={driveLink} target="_blank" rel="noopener noreferrer"
-                style={{display:'flex',alignItems:'center',justifyContent:'center',gap:8,height:48,borderRadius:12,background:C.blue,color:'#fff',textDecoration:'none',fontSize:14,fontWeight:700}}>
+                style={{display:'flex',alignItems:'center',justifyContent:'center',gap:8,height:48,borderRadius:12,background:C.blue,color:'#fff',textDecoration:'none',fontSize:16,fontWeight:700}}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 Drive에서 열기
               </a>
-              <button onClick={onDone} style={{height:44,borderRadius:12,background:'none',border:`1px solid ${C.border}`,color:C.text,fontSize:14,fontWeight:500,fontFamily:FONT_SANS,cursor:'pointer'}}>확인</button>
+              <button onClick={onDone} style={{height:44,borderRadius:12,background:'none',border:`1px solid ${C.border}`,color:C.text,fontSize:16,fontWeight:500,fontFamily:FONT_SANS,cursor:'pointer'}}>확인</button>
             </div>
           </div>
         )}
@@ -920,8 +920,8 @@ function VisualUploadModal({ visualData, accessToken, onClose, onDone }) {
         {phase==='error' && (
           <div style={{textAlign:'center',padding:'8px 0'}}>
             <div style={{fontSize:40,marginBottom:16}}>⚠️</div>
-            <div style={{fontSize:16,fontWeight:700,color:C.danger,marginBottom:8}}>업로드 실패</div>
-            <div style={{fontSize:12,color:C.dim,marginBottom:20,lineHeight:1.6}}>{errorMsg}</div>
+            <div style={{fontSize:18,fontWeight:700,color:C.danger,marginBottom:8}}>업로드 실패</div>
+            <div style={{fontSize:14,color:C.dim,marginBottom:20,lineHeight:1.6}}>{errorMsg}</div>
             <div style={{display:'flex',gap:8}}>
               <button onClick={onClose} style={{flex:1,height:44,borderRadius:10,background:'none',border:`1px solid ${C.border}`,color:C.text,cursor:'pointer'}}>닫기</button>
               <button onClick={startUpload} style={{flex:1,height:44,borderRadius:10,background:C.blue,color:'#fff',border:'none',fontWeight:700,cursor:'pointer'}}>재시도</button>
@@ -938,7 +938,7 @@ function Toast({ message, visible }) {
   return (
     <div style={{position:'absolute',bottom:visible?90:40,left:'50%',transform:'translateX(-50%)',
       background:C.surfaceHi,border:`1px solid ${C.border}`,padding:'10px 16px',borderRadius:24,
-      color:C.text,fontSize:13,fontFamily:FONT_SANS,opacity:visible?1:0,transition:'all 0.3s',
+      color:C.text,fontSize:15,fontFamily:FONT_SANS,opacity:visible?1:0,transition:'all 0.3s',
       pointerEvents:'none',zIndex:300,boxShadow:'0 10px 30px rgba(0,0,0,0.4)',whiteSpace:'nowrap'}}>
       {message}
     </div>
@@ -952,17 +952,17 @@ function CaptureMethodSheet({ title, onCamera, onGallery, onClose }) {
       <div onClick={e=>e.stopPropagation()} style={{background:C.surfaceEl,border:`1px solid ${C.border}`,borderRadius:'28px 28px 0 0',width:'100%',maxWidth:480,padding:'24px 20px',paddingBottom:'max(24px, env(safe-area-inset-bottom))',boxShadow:'0 -8px 32px rgba(15,23,42,0.12)'}}>
         {/* 핸들 */}
         <div style={{width:36,height:4,borderRadius:999,background:C.border,margin:'0 auto 20px'}}/>
-        {title && <div style={{fontSize:13,color:C.dim,marginBottom:20,textAlign:'center',fontFamily:FONT_SANS,fontWeight:600}}>{title}</div>}
+        {title && <div style={{fontSize:15,color:C.dim,marginBottom:20,textAlign:'center',fontFamily:FONT_SANS,fontWeight:600}}>{title}</div>}
         <div style={{display:'flex',flexDirection:'column',gap:10}}>
-          <button onClick={onCamera} style={{height:56,borderRadius:16,background:C.accent,color:'#fff',fontSize:16,fontWeight:700,fontFamily:FONT_SANS,border:'none',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:10,boxShadow:`0 8px 24px rgba(59,130,246,0.3)`}}>
+          <button onClick={onCamera} style={{height:56,borderRadius:16,background:C.accent,color:'#fff',fontSize:18,fontWeight:700,fontFamily:FONT_SANS,border:'none',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:10,boxShadow:`0 8px 24px rgba(59,130,246,0.3)`}}>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M9 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2h-4l-1.5-2h-3L9 3z" stroke="currentColor" strokeWidth="1.8" fill="none"/><circle cx="12" cy="13" r="4" stroke="currentColor" strokeWidth="1.8"/></svg>
             카메라로 촬영
           </button>
-          <button onClick={onGallery} style={{height:56,borderRadius:16,background:C.surface,color:C.text,fontSize:16,fontWeight:600,fontFamily:FONT_SANS,border:`1.5px solid ${C.border}`,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:10}}>
+          <button onClick={onGallery} style={{height:56,borderRadius:16,background:C.surface,color:C.text,fontSize:18,fontWeight:600,fontFamily:FONT_SANS,border:`1.5px solid ${C.border}`,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:10}}>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke={C.accent} strokeWidth="1.8"/><circle cx="9" cy="11" r="1.5" fill={C.accent}/><path d="M3 17l5-4 4 3 4-3 5 4" stroke={C.accent} strokeWidth="1.6" fill="none"/></svg>
             갤러리에서 선택
           </button>
-          <button onClick={onClose} style={{height:48,borderRadius:14,background:'none',border:`1.5px solid ${C.border}`,color:C.dimmer,fontSize:15,fontFamily:FONT_SANS,cursor:'pointer',marginTop:2}}>취소</button>
+          <button onClick={onClose} style={{height:48,borderRadius:14,background:'none',border:`1.5px solid ${C.border}`,color:C.dimmer,fontSize:17,fontFamily:FONT_SANS,cursor:'pointer',marginTop:2}}>취소</button>
         </div>
       </div>
     </div>
@@ -1153,23 +1153,23 @@ function CaptureApp() {
     return (
       <div style={{height:'100%',display:'flex',flexDirection:'column',background:C.bg,fontFamily:FONT_SANS,color:C.text,position:'relative'}}>
         <div style={{padding:'16px 20px 8px',paddingTop:'max(16px, env(safe-area-inset-top))',display:'flex',alignItems:'center',justifyContent:'space-between',gap:8}}>
-          <button onClick={()=>setView('capture')} style={{background:'none',border:'none',color:C.text,fontSize:14,cursor:'pointer',display:'flex',alignItems:'center',gap:4,padding:0}}>
+          <button onClick={()=>setView('capture')} style={{background:'none',border:'none',color:C.text,fontSize:16,cursor:'pointer',display:'flex',alignItems:'center',gap:4,padding:0}}>
             <svg width="16" height="16" viewBox="0 0 16 16"><path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>촬영
           </button>
-          <div style={{fontSize:12,fontWeight:700,letterSpacing:1,fontFamily:FONT_MONO}}>GALLERY</div>
-          <div style={{fontFamily:FONT_MONO,fontSize:11,color:C.dim}}>{allShots.length}장</div>
+          <div style={{fontSize:14,fontWeight:700,letterSpacing:1,fontFamily:FONT_MONO}}>GALLERY</div>
+          <div style={{fontFamily:FONT_MONO,fontSize:13,color:C.dim}}>{allShots.length}장</div>
         </div>
         <div style={{flex:1,overflowY:'auto',padding:'8px 16px 16px'}}>
           {SIDES.map(side=>{ if (!selectedSides[side]) return null; return (
             <div key={side}>
-              <div style={{fontSize:10,color:C.blue,fontFamily:FONT_MONO,letterSpacing:1.5,padding:'8px 4px 6px',fontWeight:700}}>— {SIDE_LABEL[side].toUpperCase()}</div>
+              <div style={{fontSize:12,color:C.blue,fontFamily:FONT_MONO,letterSpacing:1.5,padding:'8px 4px 6px',fontWeight:700}}>— {SIDE_LABEL[side].toUpperCase()}</div>
               {PRODUCTS.map(p=>{ const shots=capturedData[side][p.id]; if (shots.length===0) return null; return (
                 <div key={p.id} style={{marginBottom:20}}>
                   <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:8}}>
-                    <div style={{display:'flex',alignItems:'center',gap:8}}><ProductIcon id={p.id} size={16}/><span style={{fontSize:12,fontWeight:700,letterSpacing:0.4}}>{p.name}</span></div>
+                    <div style={{display:'flex',alignItems:'center',gap:8}}><ProductIcon id={p.id} size={16}/><span style={{fontSize:14,fontWeight:700,letterSpacing:0.4}}>{p.name}</span></div>
                     <div style={{display:'flex',alignItems:'center',gap:8}}>
-                      <span style={{fontFamily:FONT_MONO,fontSize:11,color:C.accent}}>{shots.length}장</span>
-                      <button onClick={()=>setConfirmRetake({side,productId:p.id})} style={{background:'none',border:`1px solid ${C.border}`,color:C.text,padding:'4px 10px',borderRadius:14,fontSize:11,cursor:'pointer'}}>재촬영</button>
+                      <span style={{fontFamily:FONT_MONO,fontSize:13,color:C.accent}}>{shots.length}장</span>
+                      <button onClick={()=>setConfirmRetake({side,productId:p.id})} style={{background:'none',border:`1px solid ${C.border}`,color:C.text,padding:'4px 10px',borderRadius:14,fontSize:13,cursor:'pointer'}}>재촬영</button>
                     </div>
                   </div>
                   <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:6}}>
@@ -1179,7 +1179,7 @@ function CaptureApp() {
               ); })}
             </div>
           ); })}
-          {allShots.length===0 && <div style={{textAlign:'center',padding:'80px 20px',color:C.dim,fontSize:13}}>아직 촬영된 사진이 없습니다</div>}
+          {allShots.length===0 && <div style={{textAlign:'center',padding:'80px 20px',color:C.dim,fontSize:15}}>아직 촬영된 사진이 없습니다</div>}
         </div>
         {confirmRetake && (()=>{
           const p=PRODUCTS.find(x=>x.id===confirmRetake.productId);
@@ -1187,7 +1187,7 @@ function CaptureApp() {
             <div style={{position:'absolute',inset:0,zIndex:120,background:'rgba(0,0,0,0.7)',backdropFilter:'blur(6px)',display:'flex',alignItems:'center',justifyContent:'center',padding:'0 28px'}} onClick={()=>setConfirmRetake(null)}>
               <div onClick={e=>e.stopPropagation()} style={{background:C.surface,border:`1px solid ${C.borderHi}`,borderRadius:16,padding:'22px 22px 18px',width:'100%',maxWidth:320}}>
                 <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:14}}>
-                  <ProductIcon id={p.id} size={32}/><div><div style={{fontSize:15,fontWeight:700}}>{p.name} 재촬영</div><div style={{fontSize:11,color:C.dim,marginTop:2}}>{SIDE_LABEL[confirmRetake.side]} · {capturedData[confirmRetake.side][p.id].length}장 삭제</div></div>
+                  <ProductIcon id={p.id} size={32}/><div><div style={{fontSize:17,fontWeight:700}}>{p.name} 재촬영</div><div style={{fontSize:13,color:C.dim,marginTop:2}}>{SIDE_LABEL[confirmRetake.side]} · {capturedData[confirmRetake.side][p.id].length}장 삭제</div></div>
                 </div>
                 <div style={{display:'flex',gap:8}}>
                   <button onClick={()=>setConfirmRetake(null)} style={{flex:1,height:44,borderRadius:10,background:'none',border:`1px solid ${C.border}`,color:C.text,cursor:'pointer'}}>취소</button>
@@ -1214,8 +1214,8 @@ function CaptureApp() {
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#fff" strokeWidth="2"/><circle cx="12" cy="12" r="4" stroke="#fff" strokeWidth="1.5" opacity="0.6"/><circle cx="12" cy="12" r="1.5" fill="#fff"/></svg>
             </div>
             <div>
-              <div style={{fontSize:11,color:C.dim,fontFamily:FONT_MONO,letterSpacing:1.5,fontWeight:600}}>JOINT REPORT</div>
-              <div style={{fontSize:17,fontWeight:800,color:C.text,fontFamily:FONT_DISPLAY,letterSpacing:-0.3,lineHeight:1.1}}>
+              <div style={{fontSize:13,color:C.dim,fontFamily:FONT_MONO,letterSpacing:1.5,fontWeight:600}}>JOINT REPORT</div>
+              <div style={{fontSize:19,fontWeight:800,color:C.text,fontFamily:FONT_DISPLAY,letterSpacing:-0.3,lineHeight:1.1}}>
                 {appMode==='360'?'360° Inspection':'Visual Inspection'}
               </div>
             </div>
@@ -1235,7 +1235,7 @@ function CaptureApp() {
             const active=appMode===m.id;
             return (
               <button key={m.id} onClick={()=>setAppMode(m.id)} style={{
-                padding:'9px 4px',borderRadius:10,fontFamily:FONT_SANS,fontSize:12,fontWeight:active?700:500,
+                padding:'9px 4px',borderRadius:10,fontFamily:FONT_SANS,fontSize:14,fontWeight:active?700:500,
                 background:active?C.surfaceEl:'transparent',
                 border:'none',
                 color:active?C.accent:C.dimmer,
@@ -1261,10 +1261,10 @@ function CaptureApp() {
                 <div style={{padding:'10px 14px',borderBottom:`1px solid ${C.border}`,display:'flex',alignItems:'center',justifyContent:'space-between',borderRadius:'14px 14px 0 0'}}>
                   <div style={{display:'flex',alignItems:'center',gap:8}}>
                     <div style={{width:8,height:8,borderRadius:4,background:sideDone?C.blue:C.dimmer}}/>
-                    <span style={{fontSize:13,fontWeight:700,letterSpacing:0.8,color:sideDone?C.blue:C.text}}>{SIDE_LABEL[side].toUpperCase()}</span>
-                    {sideDone && <span style={{fontSize:9,color:C.blue,fontFamily:FONT_MONO,background:`${C.blue}18`,padding:'2px 6px',borderRadius:4}}>✓ DONE</span>}
+                    <span style={{fontSize:15,fontWeight:700,letterSpacing:0.8,color:sideDone?C.blue:C.text}}>{SIDE_LABEL[side].toUpperCase()}</span>
+                    {sideDone && <span style={{fontSize:11,color:C.blue,fontFamily:FONT_MONO,background:`${C.blue}18`,padding:'2px 6px',borderRadius:4}}>✓ DONE</span>}
                   </div>
-                  <span style={{fontFamily:FONT_MONO,fontSize:11,color:sideDone?C.blue:C.dim}}>{sideShots}<span style={{color:C.dimmer}}>/{VISUAL_ITEMS.length}</span></span>
+                  <span style={{fontFamily:FONT_MONO,fontSize:13,color:sideDone?C.blue:C.dim}}>{sideShots}<span style={{color:C.dimmer}}>/{VISUAL_ITEMS.length}</span></span>
                 </div>
                 {/* 3×2 그리드 */}
                 <div style={{padding:10,display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:6}}>
@@ -1292,8 +1292,8 @@ function CaptureApp() {
                         </div>
                         {/* 항목명 */}
                         <div style={{padding:'4px 6px 5px',textAlign:'left'}}>
-                          <div style={{fontSize:8.5,fontWeight:done?700:500,color:done?C.blue:C.dim,fontFamily:FONT_SANS,lineHeight:1.3,whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{item.name}</div>
-                          <div style={{fontSize:7.5,color:done?C.blue:C.dimmer,fontFamily:FONT_MONO,marginTop:1}}>{done?'재촬영':'촬영하기'}</div>
+                          <div style={{fontSize:11,fontWeight:done?700:500,color:done?C.blue:C.dim,fontFamily:FONT_SANS,lineHeight:1.3,whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{item.name}</div>
+                          <div style={{fontSize:10,color:done?C.blue:C.dimmer,fontFamily:FONT_MONO,marginTop:1}}>{done?'재촬영':'촬영하기'}</div>
                         </div>
                       </button>
                     );
@@ -1310,7 +1310,7 @@ function CaptureApp() {
 
         {/* STEP 1: Side 선택 */}
         <div style={{marginBottom:12}}>
-          <div style={{fontSize:9,color:C.dim,fontFamily:FONT_MONO,letterSpacing:1.2,padding:'0 4px 7px'}}>STEP 1 · SIDE SELECTION</div>
+          <div style={{fontSize:11,color:C.dim,fontFamily:FONT_MONO,letterSpacing:1.2,padding:'0 4px 7px'}}>STEP 1 · SIDE SELECTION</div>
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
             {SIDES.map(side=>{
               const selected=selectedSides[side], done=allDoneFor(side);
@@ -1322,8 +1322,8 @@ function CaptureApp() {
                   setSelectedSides(next);
                 }} style={{padding:'12px',borderRadius:12,fontFamily:FONT_SANS,background:selected?`${C.blue}22`:C.surface,border:`1px solid ${selected?C.blue:C.border}`,color:selected?C.text:C.dim,cursor:isShooting?'not-allowed':'pointer',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
                   <div>
-                    <div style={{fontSize:14,fontWeight:700,letterSpacing:0.3,textAlign:'left'}}>{SIDE_LABEL[side]}</div>
-                    {selected&&<div style={{fontSize:9,fontFamily:FONT_MONO,color:done?C.accent:C.dim,marginTop:3}}>{done?'✓ 완료':`${totalShotsFor(side)}/${totalExpectedFor(side)}`}</div>}
+                    <div style={{fontSize:16,fontWeight:700,letterSpacing:0.3,textAlign:'left'}}>{SIDE_LABEL[side]}</div>
+                    {selected&&<div style={{fontSize:11,fontFamily:FONT_MONO,color:done?C.accent:C.dim,marginTop:3}}>{done?'✓ 완료':`${totalShotsFor(side)}/${totalExpectedFor(side)}`}</div>}
                   </div>
                   <div style={{width:20,height:20,borderRadius:10,flexShrink:0,background:selected?C.blue:'transparent',border:`1.5px solid ${selected?C.blue:C.border}`,display:'flex',alignItems:'center',justifyContent:'center'}}>
                     {selected&&<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 2.5" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
@@ -1357,14 +1357,14 @@ function CaptureApp() {
               <div style={{padding:'11px 14px',borderBottom:`1px solid ${isActive?C.accent+'30':C.border}`,display:'flex',alignItems:'center',justifyContent:'space-between',background:isActive?`${C.accent}08`:'transparent',borderRadius:'14px 14px 0 0'}}>
                 <div style={{display:'flex',alignItems:'center',gap:8}}>
                   <div style={{width:8,height:8,borderRadius:4,background:isActive?C.accent:sideDone?C.accentDim:C.blue,boxShadow:isActive?`0 0 8px ${C.accent}`:'none',animation:isActive?'pulse 1.2s ease-in-out infinite':'none'}}/>
-                  <span style={{fontSize:13,fontWeight:700,letterSpacing:0.8,color:isActive?C.accent:C.text}}>
+                  <span style={{fontSize:15,fontWeight:700,letterSpacing:0.8,color:isActive?C.accent:C.text}}>
                     {SIDE_LABEL[side].toUpperCase()}
                   </span>
-                  {isActive&&<span style={{fontSize:9,color:C.accent,fontFamily:FONT_MONO,background:`${C.accent}18`,padding:'2px 6px',borderRadius:4}}>● CAPTURING</span>}
-                  {sideDone&&!isActive&&<span style={{fontSize:9,color:C.accentDim,fontFamily:FONT_MONO,background:`${C.accentDim}18`,padding:'2px 6px',borderRadius:4}}>✓ DONE</span>}
+                  {isActive&&<span style={{fontSize:11,color:C.accent,fontFamily:FONT_MONO,background:`${C.accent}18`,padding:'2px 6px',borderRadius:4}}>● CAPTURING</span>}
+                  {sideDone&&!isActive&&<span style={{fontSize:11,color:C.accentDim,fontFamily:FONT_MONO,background:`${C.accentDim}18`,padding:'2px 6px',borderRadius:4}}>✓ DONE</span>}
                 </div>
                 <div style={{display:'flex',alignItems:'center',gap:8}}>
-                  <div style={{fontFamily:FONT_MONO,fontSize:11,color:sideDone?C.accent:C.dim}}>
+                  <div style={{fontFamily:FONT_MONO,fontSize:13,color:sideDone?C.accent:C.dim}}>
                     {sideTotalShots}<span style={{color:C.dimmer}}>/{sideExpected}</span>
                   </div>
                   {/* 진행 미니 바 */}
@@ -1376,7 +1376,7 @@ function CaptureApp() {
 
               {/* 구간 선택 */}
               <div style={{padding:'10px 14px',borderBottom:`1px solid ${C.border}`}}>
-                <div style={{fontSize:9,color:C.dimmer,fontFamily:FONT_MONO,letterSpacing:1,marginBottom:6,display:'flex',alignItems:'center',gap:6}}>
+                <div style={{fontSize:11,color:C.dimmer,fontFamily:FONT_MONO,letterSpacing:1,marginBottom:6,display:'flex',alignItems:'center',gap:6}}>
                   구간 선택
                   {segLocked&&<span style={{color:C.amber,background:`${C.amber}15`,border:`1px solid ${C.amber}30`,padding:'1px 5px',borderRadius:3,fontSize:8}}>LOCKED</span>}
                 </div>
@@ -1385,7 +1385,7 @@ function CaptureApp() {
                     const active=segs===n;
                     return (
                       <button key={n} onClick={()=>{ if (segLocked){showToast('촬영 시작 후에는 구간 변경 불가');return;} setSegments(prev=>({...prev,[side]:n})); }} style={{padding:'8px 10px',borderRadius:9,fontFamily:FONT_SANS,background:active?C.accent:C.bg,border:`1px solid ${active?C.accent:C.border}`,color:active?C.bg:C.text,cursor:segLocked?'not-allowed':'pointer',opacity:segLocked&&!active?0.35:1,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-                        <div><div style={{fontSize:15,fontWeight:700}}>{n}구간</div><div style={{fontSize:8,opacity:0.7,fontFamily:FONT_MONO}}>{360/n}°</div></div>
+                        <div><div style={{fontSize:17,fontWeight:700}}>{n}구간</div><div style={{fontSize:8,opacity:0.7,fontFamily:FONT_MONO}}>{360/n}°</div></div>
                         <svg width="20" height="20" viewBox="0 0 20 20">
                           <circle cx="10" cy="10" r="7" fill="none" stroke={active?C.bg:C.dim} strokeWidth="1" opacity="0.4"/>
                           {Array.from({length:n}).map((_,i)=>{const a=(i*360/n-90)*Math.PI/180;return <circle key={i} cx={10+Math.cos(a)*7} cy={10+Math.sin(a)*7} r="1.3" fill={active?C.bg:C.text}/>;  })}
@@ -1414,13 +1414,13 @@ function CaptureApp() {
 
         {/* 최근 촬영 미리보기 */}
         <div style={{marginBottom:6}}>
-          <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 4px 7px',fontSize:9,color:C.dim,fontFamily:FONT_MONO,letterSpacing:1.2}}>
+          <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 4px 7px',fontSize:11,color:C.dim,fontFamily:FONT_MONO,letterSpacing:1.2}}>
             <span>RECENT SHOTS</span>
-            <button onClick={()=>setView('gallery')} style={{background:'none',border:'none',color:C.accent,fontSize:10,fontFamily:FONT_MONO,letterSpacing:1.2,cursor:'pointer',padding:0}}>전체보기 →</button>
+            <button onClick={()=>setView('gallery')} style={{background:'none',border:'none',color:C.accent,fontSize:12,fontFamily:FONT_MONO,letterSpacing:1.2,cursor:'pointer',padding:0}}>전체보기 →</button>
           </div>
           <div style={{background:C.surfaceHi,border:`1px solid ${C.border}`,borderRadius:12,padding:9,minHeight:64}}>
             {!anyShotsTotal ? (
-              <div style={{padding:'14px',textAlign:'center',color:C.dimmer,fontSize:11,fontFamily:FONT_MONO}}>{'// 촬영을 시작하면 여기에 표시됩니다'}</div>
+              <div style={{padding:'14px',textAlign:'center',color:C.dimmer,fontSize:13,fontFamily:FONT_MONO}}>{'// 촬영을 시작하면 여기에 표시됩니다'}</div>
             ) : (
               <div style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:5}}>
                 {SIDES.flatMap(side=>PRODUCTS.flatMap(p=>capturedData[side][p.id].slice(-1).map((s,i)=>({pid:p.id,url:s.url,i})))).slice(-10).map((x,k)=>(
@@ -1444,7 +1444,7 @@ function CaptureApp() {
               background:anyShotsTotal?(allSidesDone?C.accent:'#fff'):C.surfaceHi,
               border:`1.5px solid ${anyShotsTotal?(allSidesDone?C.accent:C.border):C.border}`,
               color:allSidesDone?'#fff':anyShotsTotal?C.accent:C.dimmer,
-              fontSize:15,fontWeight:700,fontFamily:FONT_SANS,cursor:anyShotsTotal?'pointer':'not-allowed',
+              fontSize:17,fontWeight:700,fontFamily:FONT_SANS,cursor:anyShotsTotal?'pointer':'not-allowed',
               display:'flex',alignItems:'center',justifyContent:'center',gap:8,
               boxShadow:allSidesDone?`0 8px 24px rgba(59,130,246,0.3)`:'none'}}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M7 18a4.5 4.5 0 01-.5-8.97A6 6 0 0118 9.5a4.5 4.5 0 01-.5 8.5H7z" stroke="currentColor" strokeWidth="1.7" fill="none"/><path d="M12 11v6M9.5 13.5L12 11l2.5 2.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -1455,7 +1455,7 @@ function CaptureApp() {
           const anyVisual = SIDES.some(s=>VISUAL_ITEMS.some(it=>visualData[s][it.id]));
           const allVisual = SIDES.every(s=>VISUAL_ITEMS.every(it=>visualData[s][it.id]));
           return (
-            <button disabled={!anyVisual} onClick={()=>setShowVisualUpload(true)} style={{width:'100%',height:50,borderRadius:13,background:anyVisual?(allVisual?C.blue:C.surfaceHi):C.surface,border:`1.5px solid ${anyVisual?(allVisual?C.blue:C.borderHi):C.border}`,color:allVisual?'#fff':anyVisual?C.text:C.dimmer,fontSize:13,fontWeight:700,fontFamily:FONT_SANS,cursor:anyVisual?'pointer':'not-allowed',display:'flex',alignItems:'center',justifyContent:'center',gap:8}}>
+            <button disabled={!anyVisual} onClick={()=>setShowVisualUpload(true)} style={{width:'100%',height:50,borderRadius:13,background:anyVisual?(allVisual?C.blue:C.surfaceHi):C.surface,border:`1.5px solid ${anyVisual?(allVisual?C.blue:C.borderHi):C.border}`,color:allVisual?'#fff':anyVisual?C.text:C.dimmer,fontSize:15,fontWeight:700,fontFamily:FONT_SANS,cursor:anyVisual?'pointer':'not-allowed',display:'flex',alignItems:'center',justifyContent:'center',gap:8}}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.7"/><circle cx="9" cy="11" r="1.5" fill="currentColor"/><path d="M3 17l5-4 4 3 4-3 5 4" stroke="currentColor" strokeWidth="1.6" fill="none"/></svg>
               Drive 업로드 + Visual PPT
             </button>
@@ -1478,14 +1478,14 @@ function CaptureApp() {
               <div style={{width:44,height:44,borderRadius:22,background:`${C.blue}25`,border:`1px solid ${C.blue}`,display:'flex',alignItems:'center',justifyContent:'center',marginBottom:14}}>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5" stroke={C.blue} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </div>
-              <div style={{fontSize:15,fontWeight:700,color:C.text,marginBottom:6}}>섹션 전환</div>
-              <div style={{fontSize:12,color:C.dim,lineHeight:1.6,marginBottom:20}}>
+              <div style={{fontSize:17,fontWeight:700,color:C.text,marginBottom:6}}>섹션 전환</div>
+              <div style={{fontSize:14,color:C.dim,lineHeight:1.6,marginBottom:20}}>
                 {SIDE_LABEL[otherSide]}에 촬영된 사진이 있습니다.<br/>
                 <strong style={{color:C.text}}>{SIDE_LABEL[side]}</strong> 촬영을 시작하시겠습니까?
               </div>
               <div style={{display:'flex',gap:8}}>
-                <button onClick={()=>setConfirmSwitch(null)} style={{flex:1,height:44,borderRadius:10,background:'none',border:`1px solid ${C.border}`,color:C.text,cursor:'pointer',fontSize:13}}>취소</button>
-                <button onClick={()=>{ setConfirmSwitch(null); doStartCapture(productId,side); }} style={{flex:1.4,height:44,borderRadius:10,background:C.blue,color:'#fff',border:'none',fontWeight:700,cursor:'pointer',fontSize:13}}>
+                <button onClick={()=>setConfirmSwitch(null)} style={{flex:1,height:44,borderRadius:10,background:'none',border:`1px solid ${C.border}`,color:C.text,cursor:'pointer',fontSize:15}}>취소</button>
+                <button onClick={()=>{ setConfirmSwitch(null); doStartCapture(productId,side); }} style={{flex:1.4,height:44,borderRadius:10,background:C.blue,color:'#fff',border:'none',fontWeight:700,cursor:'pointer',fontSize:15}}>
                   {SIDE_LABEL[side]} 촬영 시작
                 </button>
               </div>
