@@ -1,4 +1,4 @@
-// ═══════════════════════════════════════════════════════════════
+﻿// ═══════════════════════════════════════════════════════════════
 // Joint Report — 360° Inspection Capture App
 // ═══════════════════════════════════════════════════════════════
 
@@ -10,17 +10,30 @@ const GOOGLE_DRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.file';
 const DRIVE_UPLOAD_URL   = 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart';
 const DRIVE_FOLDER_URL   = 'https://www.googleapis.com/drive/v3/files';
 
-// ─── 디자인 토큰 ──────────────────────────────────────────────
+// ─── 디자인 토큰 (Skylearn) ───────────────────────────────────
 const C = {
-  bg:'#0B0C0E', surface:'#15171B', surfaceHi:'#1C1F25',
-  border:'#26292F', borderHi:'#363A42',
-  text:'#F5F5F7', dim:'#9CA0AA', dimmer:'#5C616B',
-  accent:'#C8FF3D', accentDim:'#8FB820',
-  danger:'#FF5A47', amber:'#FFB547',
-  blue:'#1F5C8B',
+  // Surfaces
+  bg:'#FFFFFF', surface:'#F8FAFC', surfaceHi:'#F1F5F9', surfaceEl:'#FFFFFF',
+  // Borders
+  border:'#E2E8F0', borderHi:'#94A3B8',
+  // Text
+  text:'#0F172A', dim:'#475569', dimmer:'#94A3B8', faint:'#CBD5E1',
+  // Brand — Sky
+  accent:'#3B82F6', accentDim:'#1D4ED8', accentBright:'#60A5FA', accentSoft:'#DBEAFE',
+  // Progress — Leaf
+  leaf:'#22C55E', leafSoft:'#DCFCE7', leafDeep:'#16A34A',
+  // Achievement — Sun
+  amber:'#FBBF24', amberSoft:'#FEF3C7', amberDeep:'#D97706',
+  // Error — Coral
+  danger:'#F87171', dangerSoft:'#FEE2E2',
+  // Secondary — Berry
+  berry:'#A855F7',
+  // Visual mode accent
+  blue:'#3B82F6',
 };
-const FONT_SANS = '"Pretendard","Pretendard Variable",-apple-system,system-ui,sans-serif';
-const FONT_MONO = '"JetBrains Mono","SF Mono",ui-monospace,monospace';
+const FONT_DISPLAY = '"Nunito","Quicksand",-apple-system,system-ui,sans-serif';
+const FONT_SANS    = '"Atkinson Hyperlegible","Nunito Sans","Inter",-apple-system,system-ui,sans-serif';
+const FONT_MONO    = '"JetBrains Mono","SF Mono",ui-monospace,monospace';
 
 // ─── 부품 정의 ────────────────────────────────────────────────
 const PRODUCTS = [
@@ -112,12 +125,13 @@ function ProductIcon({ id, color=C.text, size=28 }) {
 function Thumb({ product, idx, imageUrl, onTap }) {
   return (
     <button onClick={onTap} style={{position:'relative',width:'100%',aspectRatio:'1/1',
-      border:`1px solid ${C.border}`,borderRadius:8,overflow:'hidden',
-      background:imageUrl?'transparent':C.surfaceHi,cursor:'pointer',padding:0}}>
+      border:`1.5px solid ${C.border}`,borderRadius:12,overflow:'hidden',
+      background:imageUrl?'transparent':C.surfaceHi,cursor:'pointer',padding:0,
+      boxShadow:'0 2px 8px rgba(15,23,42,0.06)'}}>
       {imageUrl
         ? <img src={imageUrl} alt="" style={{width:'100%',height:'100%',objectFit:'cover'}}/>
-        : <div style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center',opacity:0.4}}><ProductIcon id={product} color="#fff" size={28}/></div>}
-      <div style={{position:'absolute',left:5,bottom:4,fontFamily:FONT_MONO,fontSize:7,color:C.dim}}>#{idx}</div>
+        : <div style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center',opacity:0.35}}><ProductIcon id={product} color={C.dimmer} size={28}/></div>}
+      <div style={{position:'absolute',left:5,bottom:4,fontFamily:FONT_MONO,fontSize:7,color:C.dimmer,background:'rgba(255,255,255,0.8)',borderRadius:4,padding:'1px 4px'}}>#{idx}</div>
     </button>
   );
 }
@@ -125,48 +139,59 @@ function Thumb({ product, idx, imageUrl, onTap }) {
 // ─── ProductCard ──────────────────────────────────────────────
 function ProductCard({ product, segments, status, count, onTap, disabled }) {
   const total=shotCount(product,segments), isDone=status==='done', isShooting=status==='shooting';
+  const bgColor = isShooting ? C.accentSoft : isDone ? C.leafSoft : C.surface;
+  const borderColor = isShooting ? C.accent : isDone ? C.leaf : C.border;
   return (
     <button onClick={onTap} disabled={disabled} style={{
       textAlign:'left',display:'flex',flexDirection:'column',gap:10,
-      padding:'14px 12px',borderRadius:14,minWidth:0,
-      background:isShooting?`${C.accent}10`:C.surface,
-      border:`1px solid ${isShooting?C.accent:isDone?C.accentDim+'80':C.border}`,
+      padding:'14px 12px',borderRadius:20,minWidth:0,
+      background:bgColor,
+      border:`1.5px solid ${borderColor}`,
       cursor:disabled?'not-allowed':'pointer',
-      opacity:disabled&&!isShooting?0.55:1,
+      opacity:disabled&&!isShooting?0.5:1,
       fontFamily:FONT_SANS,color:C.text,
+      boxShadow: isShooting ? `0 8px 24px rgba(59,130,246,0.15)` : isDone ? `0 4px 12px rgba(34,197,94,0.12)` : '0 2px 8px rgba(15,23,42,0.05)',
+      transition:'all 0.24s cubic-bezier(0.34,1.56,0.64,1)',
     }}>
       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:6}}>
         <div style={{display:'flex',alignItems:'center',gap:8,flex:1,minWidth:0}}>
-          <div style={{width:32,height:32,borderRadius:8,flexShrink:0,
-            background:isShooting?C.accent:C.surfaceHi,
-            display:'flex',alignItems:'center',justifyContent:'center',
-            border:`1px solid ${isShooting?C.accent:C.border}`}}>
-            <ProductIcon id={product.id} color={isShooting?C.bg:C.text} size={20}/>
+          <div style={{width:36,height:36,borderRadius:12,flexShrink:0,
+            background:isShooting?C.accent:isDone?C.leaf:C.surfaceHi,
+            display:'flex',alignItems:'center',justifyContent:'center'}}>
+            <ProductIcon id={product.id} color={isShooting||isDone?'#fff':C.dim} size={20}/>
           </div>
           <div style={{minWidth:0,flex:1}}>
-            <div style={{fontSize:11,fontWeight:700,letterSpacing:0.4}}>{product.name}</div>
-            <div style={{fontSize:10,color:C.dim,marginTop:2}}>{product.kor}</div>
+            <div style={{fontSize:12,fontWeight:700,letterSpacing:0.3,color:C.text}}>{product.name}</div>
+            <div style={{fontSize:11,color:C.dim,marginTop:1}}>{product.kor}</div>
           </div>
         </div>
-        <div style={{fontFamily:FONT_MONO,fontSize:10,color:isShooting?C.accent:C.dim,
-          background:C.bg,border:`1px solid ${C.border}`,padding:'2px 6px',borderRadius:5,flexShrink:0}}>
+        <div style={{fontFamily:FONT_MONO,fontSize:10,color:isShooting?C.accent:isDone?C.leaf:C.dimmer,
+          background:isShooting?C.accentSoft:isDone?C.leafSoft:C.surfaceHi,
+          border:`1px solid ${isShooting?C.accentBright:isDone?C.leaf+'60':C.border}`,
+          padding:'2px 7px',borderRadius:999,flexShrink:0,fontWeight:600}}>
           {product.formula}
         </div>
       </div>
+      {/* 진행 바 */}
+      <div style={{height:6,background:isShooting?`${C.accent}25`:isDone?`${C.leaf}25`:C.surfaceHi,borderRadius:999,overflow:'hidden'}}>
+        <div style={{height:'100%',width:`${(count/total)*100}%`,borderRadius:999,
+          background:isDone?C.leaf:isShooting?C.accent:C.accentBright,
+          transition:'width 0.48s ease-out'}}/>
+      </div>
       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:6}}>
-        <div style={{display:'flex',alignItems:'center',gap:6}}>
+        <div style={{display:'flex',alignItems:'center',gap:5}}>
           <div style={{width:7,height:7,borderRadius:'50%',flexShrink:0,
-            background:isDone?C.accent:isShooting?C.accent:C.dimmer,
+            background:isDone?C.leaf:isShooting?C.accent:C.faint,
             boxShadow:isShooting?`0 0 8px ${C.accent}`:'none',
             animation:isShooting?'pulse 1.2s ease-in-out infinite':'none'}}/>
-          <div style={{fontSize:11,color:C.dim,fontFamily:FONT_MONO}}>
+          <div style={{fontSize:11,color:isDone?C.leaf:isShooting?C.accent:C.dim,fontWeight:600}}>
             {isDone?'완료':isShooting?'촬영중':'대기'}
           </div>
         </div>
-        <div style={{display:'flex',alignItems:'baseline',gap:3}}>
-          <span style={{fontFamily:FONT_MONO,fontSize:18,fontWeight:600,
-            color:isDone||isShooting?C.accent:C.text}}>{count}</span>
-          <span style={{fontFamily:FONT_MONO,fontSize:11,color:C.dim}}>/ {total}</span>
+        <div style={{display:'flex',alignItems:'baseline',gap:2}}>
+          <span style={{fontFamily:FONT_MONO,fontSize:18,fontWeight:700,
+            color:isDone?C.leaf:isShooting?C.accent:C.text}}>{count}</span>
+          <span style={{fontFamily:FONT_MONO,fontSize:11,color:C.dimmer}}>/{total}</span>
         </div>
       </div>
     </button>
@@ -491,21 +516,25 @@ function LoginScreen({ onLogin }) {
     window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?' + params.toString();
   };
   return (
-    <div style={{height:'100%',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',background:C.bg,padding:32}}>
-      <div style={{width:88,height:88,borderRadius:24,marginBottom:28,background:C.surface,border:`1px solid ${C.border}`,display:'flex',alignItems:'center',justifyContent:'center',boxShadow:`0 0 60px ${C.accent}20`}}>
-        <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-          <circle cx="22" cy="22" r="18" stroke={C.accent} strokeWidth="2"/>
-          <circle cx="22" cy="22" r="10" stroke={C.accent} strokeWidth="1.5" opacity="0.5"/>
-          <circle cx="22" cy="22" r="3" fill={C.accent}/>
-          {[0,1,2,3,4,5].map(i=>{const a=(i*60-90)*Math.PI/180;return <circle key={i} cx={22+Math.cos(a)*18} cy={22+Math.sin(a)*18} r="2.5" fill={C.accent}/>;  })}
+    <div style={{height:'100%',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',background:`linear-gradient(160deg, ${C.accentSoft} 0%, #FFFFFF 60%)`,padding:32}}>
+      {/* 로고 아이콘 */}
+      <div style={{width:96,height:96,borderRadius:28,marginBottom:24,background:C.accent,display:'flex',alignItems:'center',justifyContent:'center',boxShadow:`0 12px 32px rgba(59,130,246,0.35)`}}>
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="18" stroke="#fff" strokeWidth="2.5"/>
+          <circle cx="24" cy="24" r="9" stroke="#fff" strokeWidth="2" opacity="0.6"/>
+          <circle cx="24" cy="24" r="3" fill="#fff"/>
+          {[0,1,2,3,4,5].map(i=>{const a=(i*60-90)*Math.PI/180;return <circle key={i} cx={24+Math.cos(a)*18} cy={24+Math.sin(a)*18} r="3" fill="#fff"/>;  })}
         </svg>
       </div>
-      <div style={{fontSize:10,color:C.dim,fontFamily:FONT_MONO,letterSpacing:1.8,marginBottom:8}}>JOINT REPORT</div>
-      <div style={{fontSize:26,fontWeight:700,color:C.text,letterSpacing:-0.5,marginBottom:8,textAlign:'center'}}>Joint 360° Inspection</div>
-      <div style={{fontSize:13,color:C.dim,textAlign:'center',lineHeight:1.6,marginBottom:48,maxWidth:280}}>Google 계정으로 로그인하면<br/>촬영 후 Drive에 자동 업로드됩니다</div>
-      {error && <div style={{width:'100%',maxWidth:320,padding:'12px 16px',borderRadius:10,marginBottom:16,background:`${C.danger}15`,border:`1px solid ${C.danger}40`,fontSize:12,color:C.danger,textAlign:'center'}}>{error}</div>}
-      <button onClick={handleGoogleLogin} style={{width:'100%',maxWidth:320,height:52,borderRadius:14,background:'#fff',border:'1px solid #ddd',color:'#1a1a1a',fontSize:15,fontWeight:600,fontFamily:FONT_SANS,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:10}}>
-        <svg width="20" height="20" viewBox="0 0 48 48">
+      {/* 타이틀 */}
+      <div style={{fontSize:11,color:C.accent,fontFamily:FONT_MONO,letterSpacing:2.5,marginBottom:10,fontWeight:600}}>JOINT REPORT</div>
+      <div style={{fontSize:30,fontWeight:800,color:C.text,fontFamily:FONT_DISPLAY,letterSpacing:-0.5,marginBottom:10,textAlign:'center',lineHeight:1.2}}>360° Inspection</div>
+      <div style={{fontSize:16,color:C.dim,textAlign:'center',lineHeight:1.65,marginBottom:48,maxWidth:280}}>Google 계정으로 로그인하면<br/>촬영 후 Drive에 자동 업로드됩니다</div>
+      {error && (
+        <div style={{width:'100%',maxWidth:320,padding:'12px 16px',borderRadius:12,marginBottom:16,background:C.dangerSoft,border:`1px solid ${C.danger}`,fontSize:14,color:C.danger,textAlign:'center'}}>{error}</div>
+      )}
+      <button onClick={handleGoogleLogin} style={{width:'100%',maxWidth:320,height:56,borderRadius:16,background:'#fff',border:`1.5px solid ${C.border}`,color:C.text,fontSize:16,fontWeight:700,fontFamily:FONT_SANS,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:12,boxShadow:'0 4px 12px rgba(15,23,42,0.08)'}}>
+        <svg width="22" height="22" viewBox="0 0 48 48">
           <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
           <path fill="#FF3D00" d="m6.306 14.691 6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/>
           <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/>
@@ -919,19 +948,21 @@ function Toast({ message, visible }) {
 // ─── CaptureMethodSheet ───────────────────────────────────────
 function CaptureMethodSheet({ title, onCamera, onGallery, onClose }) {
   return (
-    <div style={{position:'absolute',inset:0,zIndex:150,background:'rgba(0,0,0,0.65)',backdropFilter:'blur(6px)',display:'flex',alignItems:'flex-end',justifyContent:'center'}} onClick={onClose}>
-      <div onClick={e=>e.stopPropagation()} style={{background:C.surface,border:`1px solid ${C.borderHi}`,borderRadius:'20px 20px 0 0',width:'100%',maxWidth:480,padding:'20px 20px',paddingBottom:'max(20px, env(safe-area-inset-bottom))'}}>
-        {title && <div style={{fontSize:12,color:C.dim,marginBottom:16,textAlign:'center',fontFamily:FONT_MONO,letterSpacing:0.5}}>{title}</div>}
-        <div style={{display:'flex',flexDirection:'column',gap:8}}>
-          <button onClick={onCamera} style={{height:52,borderRadius:14,background:C.accent,color:C.bg,fontSize:15,fontWeight:700,fontFamily:FONT_SANS,border:'none',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:10}}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M9 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2h-4l-1.5-2h-3L9 3z" stroke="currentColor" strokeWidth="1.7" fill="none"/><circle cx="12" cy="13" r="4" stroke="currentColor" strokeWidth="1.7"/></svg>
+    <div style={{position:'absolute',inset:0,zIndex:150,background:'rgba(15,23,42,0.45)',backdropFilter:'blur(8px)',display:'flex',alignItems:'flex-end',justifyContent:'center'}} onClick={onClose}>
+      <div onClick={e=>e.stopPropagation()} style={{background:C.surfaceEl,border:`1px solid ${C.border}`,borderRadius:'28px 28px 0 0',width:'100%',maxWidth:480,padding:'24px 20px',paddingBottom:'max(24px, env(safe-area-inset-bottom))',boxShadow:'0 -8px 32px rgba(15,23,42,0.12)'}}>
+        {/* 핸들 */}
+        <div style={{width:36,height:4,borderRadius:999,background:C.border,margin:'0 auto 20px'}}/>
+        {title && <div style={{fontSize:13,color:C.dim,marginBottom:20,textAlign:'center',fontFamily:FONT_SANS,fontWeight:600}}>{title}</div>}
+        <div style={{display:'flex',flexDirection:'column',gap:10}}>
+          <button onClick={onCamera} style={{height:56,borderRadius:16,background:C.accent,color:'#fff',fontSize:16,fontWeight:700,fontFamily:FONT_SANS,border:'none',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:10,boxShadow:`0 8px 24px rgba(59,130,246,0.3)`}}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M9 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2h-4l-1.5-2h-3L9 3z" stroke="currentColor" strokeWidth="1.8" fill="none"/><circle cx="12" cy="13" r="4" stroke="currentColor" strokeWidth="1.8"/></svg>
             카메라로 촬영
           </button>
-          <button onClick={onGallery} style={{height:52,borderRadius:14,background:C.surfaceHi,color:C.text,fontSize:15,fontWeight:600,fontFamily:FONT_SANS,border:`1px solid ${C.borderHi}`,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:10}}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.7"/><circle cx="9" cy="11" r="1.5" fill="currentColor"/><path d="M3 17l5-4 4 3 4-3 5 4" stroke="currentColor" strokeWidth="1.6" fill="none"/></svg>
+          <button onClick={onGallery} style={{height:56,borderRadius:16,background:C.surface,color:C.text,fontSize:16,fontWeight:600,fontFamily:FONT_SANS,border:`1.5px solid ${C.border}`,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:10}}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke={C.accent} strokeWidth="1.8"/><circle cx="9" cy="11" r="1.5" fill={C.accent}/><path d="M3 17l5-4 4 3 4-3 5 4" stroke={C.accent} strokeWidth="1.6" fill="none"/></svg>
             갤러리에서 선택
           </button>
-          <button onClick={onClose} style={{height:44,borderRadius:12,background:'none',border:`1px solid ${C.border}`,color:C.dim,fontSize:14,fontFamily:FONT_SANS,cursor:'pointer'}}>취소</button>
+          <button onClick={onClose} style={{height:48,borderRadius:14,background:'none',border:`1.5px solid ${C.border}`,color:C.dimmer,fontSize:15,fontFamily:FONT_SANS,cursor:'pointer',marginTop:2}}>취소</button>
         </div>
       </div>
     </div>
@@ -1176,34 +1207,40 @@ function CaptureApp() {
     <div style={{height:'100%',display:'flex',flexDirection:'column',background:C.bg,fontFamily:FONT_SANS,color:C.text,position:'relative'}}>
 
       {/* 헤더 */}
-      <div style={{padding:'13px 14px 0',paddingTop:'max(13px, env(safe-area-inset-top))'}}>
-        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:8,marginBottom:10}}>
-          <div>
-            <div style={{fontSize:9,color:C.dim,letterSpacing:2,fontFamily:FONT_MONO}}>JOINT REPORT</div>
-            <div style={{fontSize:16,fontWeight:700,marginTop:1,letterSpacing:-0.3}}>
-              {appMode==='360'?'360° Inspection':'Visual Inspection'}
+      <div style={{padding:'14px 16px 0',paddingTop:'max(14px, env(safe-area-inset-top))',background:C.surface,borderBottom:`1px solid ${C.border}`}}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:8,marginBottom:12}}>
+          <div style={{display:'flex',alignItems:'center',gap:10}}>
+            <div style={{width:36,height:36,borderRadius:12,background:C.accent,display:'flex',alignItems:'center',justifyContent:'center',boxShadow:`0 4px 12px rgba(59,130,246,0.3)`}}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#fff" strokeWidth="2"/><circle cx="12" cy="12" r="4" stroke="#fff" strokeWidth="1.5" opacity="0.6"/><circle cx="12" cy="12" r="1.5" fill="#fff"/></svg>
+            </div>
+            <div>
+              <div style={{fontSize:11,color:C.dim,fontFamily:FONT_MONO,letterSpacing:1.5,fontWeight:600}}>JOINT REPORT</div>
+              <div style={{fontSize:17,fontWeight:800,color:C.text,fontFamily:FONT_DISPLAY,letterSpacing:-0.3,lineHeight:1.1}}>
+                {appMode==='360'?'360° Inspection':'Visual Inspection'}
+              </div>
             </div>
           </div>
           <div style={{display:'flex',gap:6}}>
-            <button onClick={()=>{ setAccessToken(null); resetAll(); setVisualData({outboard:emptyVisual(),inboard:emptyVisual()}); }} style={{width:34,height:34,borderRadius:17,background:C.surface,border:`1px solid ${C.border}`,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer'}}>
-              <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M10 2h3a1 1 0 011 1v10a1 1 0 01-1 1h-3" stroke={C.dim} strokeWidth="1.4" strokeLinecap="round"/><path d="M7 11l3-3-3-3M10 8H3" stroke={C.text} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <button onClick={()=>{ setAccessToken(null); resetAll(); setVisualData({outboard:emptyVisual(),inboard:emptyVisual()}); }} style={{width:36,height:36,borderRadius:12,background:C.surfaceHi,border:`1px solid ${C.border}`,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer'}}>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 2h3a1 1 0 011 1v10a1 1 0 01-1 1h-3" stroke={C.dim} strokeWidth="1.4" strokeLinecap="round"/><path d="M7 11l3-3-3-3M10 8H3" stroke={C.text} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </button>
-            <button onClick={()=>{ if(appMode==='360') resetAll(); else setVisualData({outboard:emptyVisual(),inboard:emptyVisual()}); }} disabled={isShooting} style={{width:34,height:34,borderRadius:17,background:C.surface,border:`1px solid ${C.border}`,display:'flex',alignItems:'center',justifyContent:'center',cursor:isShooting?'not-allowed':'pointer',opacity:isShooting?0.4:1}}>
-              <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8a5 5 0 109-3" stroke={C.text} strokeWidth="1.5" strokeLinecap="round"/><path d="M12 2v3h-3" stroke={C.text} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <button onClick={()=>{ if(appMode==='360') resetAll(); else setVisualData({outboard:emptyVisual(),inboard:emptyVisual()}); }} disabled={isShooting} style={{width:36,height:36,borderRadius:12,background:C.surfaceHi,border:`1px solid ${C.border}`,display:'flex',alignItems:'center',justifyContent:'center',cursor:isShooting?'not-allowed':'pointer',opacity:isShooting?0.4:1}}>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8a5 5 0 109-3" stroke={C.text} strokeWidth="1.5" strokeLinecap="round"/><path d="M12 2v3h-3" stroke={C.text} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </button>
           </div>
         </div>
         {/* 모드 탭 */}
-        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:4,marginBottom:4}}>
+        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:6,marginBottom:14,background:C.surfaceHi,borderRadius:14,padding:4}}>
           {[{id:'360',label:'360° Inspection'},{id:'visual',label:'Visual Inspection'}].map(m=>{
             const active=appMode===m.id;
             return (
               <button key={m.id} onClick={()=>setAppMode(m.id)} style={{
-                padding:'7px 4px',borderRadius:10,fontFamily:FONT_SANS,fontSize:11,fontWeight:active?700:500,
-                background:active?C.surface:'transparent',
-                border:`1.5px solid ${active?(m.id==='visual'?C.blue:C.accent):C.border}`,
-                color:active?(m.id==='visual'?C.blue:C.accent):C.dimmer,
+                padding:'9px 4px',borderRadius:10,fontFamily:FONT_SANS,fontSize:12,fontWeight:active?700:500,
+                background:active?C.surfaceEl:'transparent',
+                border:'none',
+                color:active?C.accent:C.dimmer,
                 cursor:'pointer',transition:'all 0.2s',
+                boxShadow:active?'0 2px 8px rgba(15,23,42,0.08)':'none',
               }}>{m.label}</button>
             );
           })}
@@ -1397,14 +1434,20 @@ function CaptureApp() {
       </div>
 
       {/* 하단 버튼 */}
-      <div style={{padding:'10px 14px',paddingBottom:'max(14px, env(safe-area-inset-bottom))',borderTop:`1px solid ${C.border}`,background:C.bg}}>
+      <div style={{padding:'12px 16px',paddingBottom:'max(16px, env(safe-area-inset-bottom))',borderTop:`1px solid ${C.border}`,background:C.surface,boxShadow:'0 -2px 12px rgba(15,23,42,0.06)'}}>
         {appMode==='360' ? (
           <div style={{display:'flex',gap:8,alignItems:'center'}}>
-            <button onClick={()=>setView('gallery')} style={{width:48,height:48,borderRadius:12,background:C.surface,border:`1px solid ${C.border}`,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer',flexShrink:0}}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke={C.text} strokeWidth="1.6"/><circle cx="9" cy="11" r="1.5" fill={C.text}/><path d="M3 17l5-4 4 3 4-3 5 4" stroke={C.text} strokeWidth="1.6" fill="none" strokeLinejoin="round"/></svg>
+            <button onClick={()=>setView('gallery')} style={{width:56,height:56,borderRadius:16,background:C.surfaceHi,border:`1.5px solid ${C.border}`,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer',flexShrink:0}}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke={C.accent} strokeWidth="1.7"/><circle cx="9" cy="11" r="1.5" fill={C.accent}/><path d="M3 17l5-4 4 3 4-3 5 4" stroke={C.accent} strokeWidth="1.6" fill="none" strokeLinejoin="round"/></svg>
             </button>
-            <button disabled={!anyShotsTotal} onClick={()=>setShowUpload(true)} style={{flex:1,height:48,borderRadius:12,background:anyShotsTotal?(allSidesDone?C.accent:C.surfaceHi):C.surface,border:`1px solid ${anyShotsTotal?(allSidesDone?C.accent:C.borderHi):C.border}`,color:allSidesDone?C.bg:anyShotsTotal?C.text:C.dimmer,fontSize:13,fontWeight:600,fontFamily:FONT_SANS,cursor:anyShotsTotal?'pointer':'not-allowed',display:'flex',alignItems:'center',justifyContent:'center',gap:8}}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 18a4.5 4.5 0 01-.5-8.97A6 6 0 0118 9.5a4.5 4.5 0 01-.5 8.5H7z" stroke="currentColor" strokeWidth="1.7" fill="none"/><path d="M12 11v6M9.5 13.5L12 11l2.5 2.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <button disabled={!anyShotsTotal} onClick={()=>setShowUpload(true)} style={{flex:1,height:56,borderRadius:16,
+              background:anyShotsTotal?(allSidesDone?C.accent:'#fff'):C.surfaceHi,
+              border:`1.5px solid ${anyShotsTotal?(allSidesDone?C.accent:C.border):C.border}`,
+              color:allSidesDone?'#fff':anyShotsTotal?C.accent:C.dimmer,
+              fontSize:15,fontWeight:700,fontFamily:FONT_SANS,cursor:anyShotsTotal?'pointer':'not-allowed',
+              display:'flex',alignItems:'center',justifyContent:'center',gap:8,
+              boxShadow:allSidesDone?`0 8px 24px rgba(59,130,246,0.3)`:'none'}}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M7 18a4.5 4.5 0 01-.5-8.97A6 6 0 0118 9.5a4.5 4.5 0 01-.5 8.5H7z" stroke="currentColor" strokeWidth="1.7" fill="none"/><path d="M12 11v6M9.5 13.5L12 11l2.5 2.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
               Drive 업로드 + PPT
             </button>
           </div>
